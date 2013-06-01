@@ -10,6 +10,7 @@ import org.basex.data.*;
 import org.basex.index.*;
 import org.basex.index.ft.*;
 import org.basex.index.value.*;
+import org.basex.index.spatial.*;
 import org.basex.io.*;
 import org.basex.util.*;
 
@@ -94,6 +95,7 @@ public abstract class ACreate extends Command {
       case TEXT:      ib = new ValueIndexBuilder(data, true); break;
       case ATTRIBUTE: ib = new ValueIndexBuilder(data, false); break;
       case FULLTEXT:  ib = new FTBuilder(data); break;
+      case SPATIAL:   ib = new SpatialBuilder(data); break;
       default:        throw Util.notexpected();
     }
     data.closeIndex(index);

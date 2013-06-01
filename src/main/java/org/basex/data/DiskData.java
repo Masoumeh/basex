@@ -12,6 +12,7 @@ import org.basex.index.*;
 import org.basex.index.ft.*;
 import org.basex.index.name.*;
 import org.basex.index.path.*;
+import org.basex.index.spatial.*;
 import org.basex.index.value.*;
 import org.basex.io.*;
 import org.basex.io.in.DataInput;
@@ -89,6 +90,7 @@ public final class DiskData extends Data {
       if(meta.attrindex) atvindex = new DiskValues(this, false);
     }
     if(meta.ftxtindex) ftxindex = new FTIndex(this);
+    if(meta.spindex)   spindex  = new SpatialIndex(this);
     init();
   }
 
@@ -181,6 +183,7 @@ public final class DiskData extends Data {
       case TEXT:      txtindex = null; break;
       case ATTRIBUTE: atvindex = null; break;
       case FULLTEXT:  ftxindex = null; break;
+      case SPATIAL:   spindex  = null; break;
       default:        break;
     }
   }
@@ -192,6 +195,7 @@ public final class DiskData extends Data {
       case TEXT:      txtindex = index; break;
       case ATTRIBUTE: atvindex = index; break;
       case FULLTEXT:  ftxindex = index; break;
+      case SPATIAL:   spindex  = index; break;
       default:        break;
     }
   }

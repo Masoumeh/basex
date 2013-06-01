@@ -127,12 +127,22 @@ public final class Prop extends AProp {
   public static final Object[] ATTRINDEX = { "ATTRINDEX", true };
   /** Flag for creating a full-text index. */
   public static final Object[] FTINDEX = { "FTINDEX", false };
+  /** Flag for creating a spatial index. */
+  public static final Object[] SPINDEX = { "SPINDEX", false };
+
 
   /** Maximum number of text/attribute index entries
    *  to keep in memory during index creation. */
   public static final Object[] INDEXSPLITSIZE = { "INDEXSPLITSIZE", 0 };
   /** Maximum number of fulltext index entries to keep in memory during index creation. */
   public static final Object[] FTINDEXSPLITSIZE = { "FTINDEXSPLITSIZE", 0 };
+
+  /** Maximum number of text/attribute index entries
+   *  to keep in memory during index creation. */
+  //public static final Object[] INDEXSPLITSIZE = { "INDEXSPLITSIZE", 0 };
+  /** Maximum number of fulltext index entries to keep in memory during index creation. */
+  public static final Object[] SPINDEXSPLITSIZE = { "FTINDEXSPLITSIZE", 0 };
+
 
   /** Maximum length of index entries. */
   public static final Object[] MAXLEN = { "MAXLEN", 96 };

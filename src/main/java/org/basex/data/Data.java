@@ -97,6 +97,8 @@ public abstract class Data {
   public Index atvindex;
   /** Full-text index instance. */
   public Index ftxindex;
+  /** Spatial index instance. */
+  public Index spindex;
   /** Number of current database users. */
   public int pins = 1;
 
@@ -177,6 +179,7 @@ public abstract class Data {
       case ATTRIBUTE: return atvindex;
       case FULLTEXT:  return ftxindex;
       case PATH:      return paths;
+      case SPATIAL:   return spindex;
       default:        throw Util.notexpected();
     }
   }

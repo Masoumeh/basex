@@ -791,6 +791,8 @@ public interface Text {
   String ATTRIBUTE_INDEX = lang("attribute_index");
   /** Info on full-text indexing. */
   String FULLTEXT_INDEX = lang("fulltext_index");
+  /** Info on spatial indexing. */
+  String SPATIAL_INDEX = lang("spatial_index");
   /** Info on path summary. */
   String PATH_INDEX = lang("path_index");
   /** Info on up-to-date. */

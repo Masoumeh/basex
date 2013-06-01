@@ -17,6 +17,8 @@ public enum IndexType {
   ATTRIBUTE,
   /** Full-text index. */
   FULLTEXT,
+  /** Spatial index. */
+  SPATIAL,
   /** Path index. */
   PATH
 }

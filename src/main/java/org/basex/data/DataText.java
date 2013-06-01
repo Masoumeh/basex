@@ -72,6 +72,9 @@ public interface DataText {
   String DBCRTATV = "CRTATV";
   /** Full-text indexing. */
   String DBCRTFTX = "CRTFTX";
+  /** Spatial indexing. */
+  String DBCRTSP = "CRTSP";
+
 
   /** Full-text wildcards indexing (legacy, obsolete). */
   String DBWCIDX = "WCINDEX";

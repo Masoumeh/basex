@@ -310,6 +310,7 @@ single_cmd           = Single command expected.
 size                 = Size
 skip_corrupt_files   = Skip corrupt (non-well-formed) files
 skipped              = Skipped
+spatial_index		 = Spatial index
 split_input_lines    = Splits input into lines
 srv_running          = Server is running or permission was denied.
 srv_started_port_%   = Server was started (port: %)

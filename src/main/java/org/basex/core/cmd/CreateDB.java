@@ -11,6 +11,7 @@ import org.basex.core.parse.Commands.*;
 import org.basex.data.*;
 import org.basex.index.*;
 import org.basex.index.ft.*;
+import org.basex.index.spatial.*;
 import org.basex.index.value.*;
 import org.basex.io.*;
 import org.basex.io.in.*;
@@ -100,6 +101,7 @@ public final class CreateDB extends ACreate {
           if(data.meta.createtext) create(IndexType.TEXT,      data, this);
           if(data.meta.createattr) create(IndexType.ATTRIBUTE, data, this);
           if(data.meta.createftxt) create(IndexType.FULLTEXT,  data, this);
+          if(data.meta.createsp)   create(IndexType.SPATIAL, data, this);
         } finally {
           data.finishUpdate();
         }
@@ -160,6 +162,8 @@ public final class CreateDB extends ACreate {
         new ValueIndexBuilder(data, false).build());
       if(data.meta.createftxt) data.setIndex(IndexType.FULLTEXT,
         new FTBuilder(data).build());
+      if(data.meta.createsp) data.setIndex(IndexType.SPATIAL,
+          new SpatialBuilder(data).build());
       data.close();
     } finally {
       builder.close();

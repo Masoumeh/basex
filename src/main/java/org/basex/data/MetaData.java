@@ -53,12 +53,17 @@ public final class MetaData {
   public volatile boolean attrindex;
   /** Indicates if a full-text index exists. */
   public volatile boolean ftxtindex;
+  /** Indicates if a spatial index exists. */
+  public volatile boolean spindex;
   /** Indicates if text index is to be recreated. */
   public volatile boolean createtext;
   /** Indicates if attribute index is to be recreated. */
   public volatile boolean createattr;
   /** Indicates if full-text index is to be recreated. */
   public volatile boolean createftxt;
+  /** Indicates if spatial-text index is to be recreated. */
+  public volatile boolean createsp;
+
 
   /** Flag for full-text stemming. */
   public volatile boolean stemming;

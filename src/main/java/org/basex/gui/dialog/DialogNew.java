@@ -32,6 +32,8 @@ public final class DialogNew extends BaseXDialog {
   private final BaseXCheckBox atvindex;
   /** Full-text index flag. */
   private final BaseXCheckBox ftxindex;
+  /** spatial index flag. */
+  private final BaseXCheckBox spindex;
   /** Editable full-text options. */
   private final DialogFT ft;
   /** Available databases. */
@@ -63,7 +65,7 @@ public final class DialogNew extends BaseXDialog {
     general = new DialogImport(this, pnl, parsing);
 
     // index panel
-    final BaseXBack indexes = new BaseXBack(new TableLayout(6, 1, 0, 0)).border(8);
+    final BaseXBack indexes = new BaseXBack(new TableLayout(7, 1, 0, 0)).border(8);
 
     txtindex = new BaseXCheckBox(TEXT_INDEX, prop.is(Prop.TEXTINDEX), 0, this).large();
     indexes.add(txtindex);
@@ -81,6 +83,10 @@ public final class DialogNew extends BaseXDialog {
 
     ft = new DialogFT(this, true);
     indexes.add(ft);
+    
+    // spatial panel
+    spindex = new BaseXCheckBox(SPATIAL_INDEX, prop.is(Prop.SPINDEX), 0, this).large();
+    indexes.add(spindex);
 
     tabs.addTab(GENERAL, general);
     tabs.addTab(PARSING, parsing);
