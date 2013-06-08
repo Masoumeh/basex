@@ -123,6 +123,10 @@ public abstract class ACreate extends Command {
         data.meta.ftxtindex = false;
         pat = DATAFTX;
         break;
+      case SPATIAL:
+        data.meta.spindex    = false;
+        pat = DATASPL;
+        break;
       default:
     }
     data.closeIndex(index);

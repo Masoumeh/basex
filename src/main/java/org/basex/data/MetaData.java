@@ -131,6 +131,7 @@ public final class MetaData {
     createtext = prop.is(Prop.TEXTINDEX);
     createattr = prop.is(Prop.ATTRINDEX);
     createftxt = prop.is(Prop.FTINDEX);
+    createsp   = prop.is(Prop.SPINDEX);
     diacritics = prop.is(Prop.DIACRITICS);
     stemming = prop.is(Prop.STEMMING);
     casesens = prop.is(Prop.CASESENS);

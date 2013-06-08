@@ -83,10 +83,11 @@ public final class DialogNew extends BaseXDialog {
 
     ft = new DialogFT(this, true);
     indexes.add(ft);
-    
+
     // spatial panel
     spindex = new BaseXCheckBox(SPATIAL_INDEX, prop.is(Prop.SPINDEX), 0, this).large();
     indexes.add(spindex);
+
 
     tabs.addTab(GENERAL, general);
     tabs.addTab(PARSING, parsing);
@@ -142,6 +143,7 @@ public final class DialogNew extends BaseXDialog {
     gui.set(Prop.TEXTINDEX, txtindex.isSelected());
     gui.set(Prop.ATTRINDEX, atvindex.isSelected());
     gui.set(Prop.FTINDEX,   ftxindex.isSelected());
+    gui.set(Prop.SPINDEX, spindex.isSelected());
     general.setOptions();
     ft.setOptions();
   }

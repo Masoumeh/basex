@@ -45,6 +45,9 @@ public final class DropIndex extends ACreate {
         data.meta.createftxt = false;
         it = IndexType.FULLTEXT;
         break;
+      case SPATIAL:
+        data.meta.createsp   = false;
+        it = IndexType.SPATIAL;
       default:
         return error(UNKNOWN_CMD_X, this);
     }

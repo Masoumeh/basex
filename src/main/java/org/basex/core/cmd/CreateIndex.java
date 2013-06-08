@@ -52,6 +52,10 @@ public final class CreateIndex extends ACreate {
         data.meta.language = Language.get(prop);
         index = IndexType.FULLTEXT;
         break;
+      case SPATIAL:
+        data.meta.createsp = true;
+        data.meta.language = Language.get(prop);
+        index = IndexType.SPATIAL;
       default:
         return error(UNKNOWN_CMD_X, this);
     }

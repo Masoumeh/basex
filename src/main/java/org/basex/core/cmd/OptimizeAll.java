@@ -126,10 +126,12 @@ public final class OptimizeAll extends ACreate {
       if(m.createtext) create(IndexType.TEXT, d, cmd);
       if(m.createattr) create(IndexType.ATTRIBUTE, d, cmd);
       if(m.createftxt) create(IndexType.FULLTEXT, d, cmd);
+      if(m.createsp)   create(IndexType.SPATIAL, d, cmd);
       // adopt original meta data
       d.meta.createtext = m.createtext;
       d.meta.createattr = m.createattr;
       d.meta.createftxt = m.createftxt;
+      d.meta.createsp   = m.createsp;
       d.meta.filesize   = m.filesize;
       d.meta.users      = m.users;
       d.meta.dirty      = true;

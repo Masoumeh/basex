@@ -104,6 +104,8 @@ public interface DataText {
   String DATAATV = "atv";
   /** Database - Full-text index. */
   String DATAFTX = "ftx";
+  /** Database - Spatial index. */
+  String DATASPL = "spl";
   /** Database - Stopword list. */
   String DATASWL = "swl";
   /** Database - Updating flag. */

@@ -122,6 +122,7 @@ public final class Optimize extends ACreate {
     optimize(IndexType.ATTRIBUTE, data, md.createattr, md.attrindex, c);
     optimize(IndexType.TEXT,      data, md.createtext, md.textindex, c);
     optimize(IndexType.FULLTEXT,  data, md.createftxt, md.ftxtindex, c);
+    optimize(IndexType.SPATIAL,   data, md.createsp  , md.spindex  , c);
   }
 
   /**

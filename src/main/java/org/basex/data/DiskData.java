@@ -165,6 +165,7 @@ public final class DiskData extends Data {
       closeIndex(IndexType.TEXT);
       closeIndex(IndexType.ATTRIBUTE);
       closeIndex(IndexType.FULLTEXT);
+      closeIndex(IndexType.SPATIAL);
     } catch(final IOException ex) {
       Util.stack(ex);
     }
