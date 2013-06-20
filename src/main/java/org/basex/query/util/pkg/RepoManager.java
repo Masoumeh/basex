@@ -119,7 +119,7 @@ public final class RepoManager {
    * @return new entry
    */
   private static TokenList entry(final String name, final String version,
-                                 final String type, final String path) {
+      final String type, final String path) {
 
     final TokenList tl = new TokenList();
     tl.add(name);
@@ -151,7 +151,7 @@ public final class RepoManager {
         }
       }
     }
-    return sl.sort(false, true);
+    return sl.sort(false);
   }
 
   /**

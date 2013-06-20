@@ -8,6 +8,7 @@ import java.io.*;
 
 import org.basex.build.xml.*;
 import org.basex.core.*;
+import org.basex.core.Context;
 import org.basex.io.*;
 import org.basex.io.in.*;
 import org.basex.io.out.*;
@@ -156,7 +157,7 @@ public final class FNGen extends StandardFunc {
 
     final String uri = IO.get(u.toJava()).path();
     // check if all target paths are unique
-    if(ctx.updates.putPaths.add(uri) < 0) UPURIDUP.thrw(info, uri);
+    if(!ctx.updates.putPaths.add(uri)) UPURIDUP.thrw(info, uri);
 
     ctx.updates.add(new Put(info, target.pre, target.data, uri), ctx);
     return null;
@@ -295,7 +296,7 @@ public final class FNGen extends StandardFunc {
     if(item == null) return null;
     try {
       final IO io = new IOContent(checkStr(item), string(ctx.sc.baseURI().string()));
-      return parseXml(io, ctx, frag);
+      return parseXml(io, ctx.context, frag);
     } catch(final IOException ex) {
       throw SAXERR.thrw(info, ex);
     }
@@ -325,18 +326,9 @@ public final class FNGen extends StandardFunc {
   }
 
   @Override
-  public boolean xquery3() {
-    return sig == DATA && expr.length == 0 || oneOf(sig, SERIALIZE, UNPARSED_TEXT,
-        UNPARSED_TEXT_LINES, UNPARSED_TEXT_AVAILABLE, PARSE_XML, URI_COLLECTION);
-  }
-
-  @Override
-  public boolean uses(final Use u) {
-    return
-      u == Use.CNS && sig == PARSE_XML ||
-      u == Use.UPD && sig == PUT ||
-      u == Use.X30 && xquery3() ||
-      u == Use.CTX && (sig == DATA && expr.length == 0 || sig == PUT) || super.uses(u);
+  public boolean has(final Flag flag) {
+    return (flag == Flag.X30 || flag == Flag.CTX) && (sig == DATA && expr.length == 0) ||
+        super.has(flag);
   }
 
   @Override
@@ -372,16 +364,15 @@ public final class FNGen extends StandardFunc {
    * @return result
    * @throws IOException I/O exception
    */
-  public static ANode parseXml(final IO input, final QueryContext ctx,
-      final boolean frag) throws IOException {
+  public static ANode parseXml(final IO input, final Context ctx, final boolean frag)
+      throws IOException {
 
-    final Prop prop = ctx.context.prop;
+    final Prop prop = ctx.prop;
     final boolean chop = prop.is(Prop.CHOP);
     try {
       prop.set(Prop.CHOP, false);
       return new DBNode(frag || prop.is(Prop.INTPARSE) ?
-        new XMLParser(input, ctx.context.prop, frag) :
-        new SAXWrapper(input, ctx.context.prop));
+        new XMLParser(input, ctx.prop, frag) : new SAXWrapper(input, ctx.prop));
     } finally {
       prop.set(Prop.CHOP, chop);
     }

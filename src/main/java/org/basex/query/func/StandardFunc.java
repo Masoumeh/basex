@@ -58,7 +58,7 @@ public abstract class StandardFunc extends Arr {
   public final Expr optimize(final QueryContext ctx, final VarScope scp)
       throws QueryException {
     // skip context-based or non-deterministic functions, and non-values
-    return optPre(uses(Use.CTX) || uses(Use.NDT) || !allAreValues() ? opt(ctx) :
+    return optPre(has(Flag.CTX) || has(Flag.NDT) || !allAreValues() ? opt(ctx) :
       sig.ret.zeroOrOne() ? item(ctx, info) : value(ctx), ctx);
   }
 
@@ -75,19 +75,11 @@ public abstract class StandardFunc extends Arr {
 
   @Override
   public final StandardFunc copy(final QueryContext ctx, final VarScope scp,
-      final IntMap<Var> vs) {
+      final IntObjMap<Var> vs) {
     final int es = expr.length;
     final Expr[] arg = new Expr[es];
     for(int e = 0; e < es; e++) arg[e] = expr[e].copy(ctx, scp, vs);
     return sig.get(info, arg);
-  }
-
-  /**
-   * Returns true if this is an XQuery 3.0 function.
-   * @return result of check
-   */
-  public boolean xquery3() {
-    return false;
   }
 
   /**
@@ -104,13 +96,18 @@ public abstract class StandardFunc extends Arr {
   }
 
   @Override
+  public boolean has(final Flag flag) {
+    return sig.has(flag) || super.has(flag);
+  }
+
+  @Override
   public final boolean isFunction(final Function f) {
     return sig == f;
   }
 
   @Override
   public final boolean isVacuous() {
-    return !uses(Use.UPD) && type.eq(SeqType.EMP);
+    return !has(Flag.UPD) && type.eq(SeqType.EMP);
   }
 
   @Override

@@ -90,7 +90,7 @@ public final class DiskData extends Data {
       if(meta.attrindex) atvindex = new DiskValues(this, false);
     }
     if(meta.ftxtindex) ftxindex = new FTIndex(this);
-    if(meta.spindex)   spindex  = new SpatialIndex(this);
+    if(meta.spindex)   spindex  = new SpatialIndex();
     init();
   }
 
@@ -377,13 +377,10 @@ public final class DiskData extends Data {
 
     // add text to map to index later
     if(meta.updindex && m != null && value.length <= meta.maxlen) {
-      final IntList ids;
-      final int hash = m.id(value);
-      if(hash == 0) {
-        ids = new IntList();
-        m.add(value, ids);
-      } else {
-        ids = m.value(hash);
+      IntList ids = m.get(value);
+      if(ids == null) {
+        ids = new IntList(1);
+        m.put(value, ids);
       }
       ids.add(id);
     }
@@ -416,14 +413,11 @@ public final class DiskData extends Data {
          meta.textindex && (k == TEXT || k == COMM || k == PI)) {
         final byte[] key = text(p, !isAttr);
         if(key.length <= meta.maxlen) {
-          final IntList ids;
           final TokenObjMap<IntList> m = isAttr ? atvs : txts;
-          final int hash = m.id(key);
-          if(hash == 0) {
-            ids = new IntList();
-            m.add(key, ids);
-          } else {
-            ids = m.value(hash);
+          IntList ids = m.get(key);
+          if(ids == null) {
+            ids = new IntList(1);
+            m.put(key, ids);
           }
           ids.add(id(p));
         }

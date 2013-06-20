@@ -36,7 +36,8 @@ public abstract class StaticDecl extends StaticScope {
    * @param ii input info
    */
   public StaticDecl(final StaticContext sctx, final Ann a, final QNm nm, final SeqType t,
-      final VarScope scp, final StringBuilder xqdoc, final InputInfo ii) {
+      final VarScope scp, final String xqdoc, final InputInfo ii) {
+
     super(scp, xqdoc, ii);
     sc = sctx;
     ann = a == null ? new Ann() : a;
@@ -49,4 +50,13 @@ public abstract class StaticDecl extends StaticScope {
    * @return a byte sequence that uniquely identifies this declaration
    */
   public abstract byte[] id();
+
+  /**
+   * Returns the type of this expression. If no type has been declare in the expression,
+   * it is derived from the expression type.
+   * @return return type
+   */
+  public SeqType type() {
+    return declType != null ? declType : expr.type();
+  }
 }

@@ -111,7 +111,7 @@ public final class FTWords extends FTExpr {
     matches.reset(tokNum);
 
     final int c = contains(ctx);
-    if(c == 0) matches.size = 0;
+    if(c == 0) matches.size(0);
 
     // scoring: include number of tokens for calculations
     return new FTNode(matches, c == 0 ? 0 : Scoring.word(c, ctx.fttoken.count()));
@@ -144,7 +144,7 @@ public final class FTWords extends FTExpr {
             do {
               final byte[] tok = lex.nextToken();
               t += tok.length;
-              if(ftt.opt.sw != null && ftt.opt.sw.id(tok) != 0) {
+              if(ftt.opt.sw != null && ftt.opt.sw.contains(tok)) {
                 ++d;
               } else {
                 final FTIndexIterator ir = lex.get().length > data.meta.maxlen ?
@@ -365,7 +365,7 @@ public final class FTWords extends FTExpr {
       ft.init(t);
       while(ft.hasNext()) {
         final byte[] tok = ft.nextToken();
-        if(fto.sw != null && fto.sw.id(tok) != 0) continue;
+        if(fto.sw != null && fto.sw.contains(tok)) continue;
 
         if(fto.is(WC)) {
           // don't use index if one of the terms starts with a wildcard
@@ -396,9 +396,9 @@ public final class FTWords extends FTExpr {
   }
 
   @Override
-  public boolean uses(final Use u) {
-    if(occ != null) for(final Expr o : occ) if(o.uses(u)) return true;
-    return query.uses(u);
+  public boolean has(final Flag flag) {
+    if(occ != null) for(final Expr o : occ) if(o.has(flag)) return true;
+    return query.has(flag);
   }
 
   @Override
@@ -425,7 +425,8 @@ public final class FTWords extends FTExpr {
   }
 
   @Override
-  public FTExpr copy(final QueryContext ctx, final VarScope scp, final IntMap<Var> vs) {
+  public FTExpr copy(final QueryContext ctx, final VarScope scp,
+      final IntObjMap<Var> vs) {
     final FTWords ftw = new FTWords(info, query.copy(ctx, scp, vs), mode,
         occ == null ? null : Arr.copyAll(ctx, scp, vs, occ));
     if(data != null) ftw.data = data;

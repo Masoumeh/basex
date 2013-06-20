@@ -243,6 +243,9 @@ public final class BaseXServer extends Main implements Runnable {
           case 'i': // activate interactive mode
             console = true;
             break;
+          case 'n': // parse host the server is bound to
+            context.mprop.set(MainProp.SERVERHOST, arg.string());
+            break;
           case 'p': // parse server port
             context.mprop.set(MainProp.SERVERPORT, arg.number());
             break;
@@ -327,8 +330,8 @@ public final class BaseXServer extends Main implements Runnable {
       stop.touch();
       new Socket(LOCALHOST, eport).close();
       new Socket(LOCALHOST, port).close();
-      // check if server was really stopped
-      while(ping(LOCALHOST, port)) Performance.sleep(50);
+      // wait and check if server was really stopped
+      do Performance.sleep(100); while(ping(LOCALHOST, port));
     } catch(final IOException ex) {
       stop.delete();
       throw ex;

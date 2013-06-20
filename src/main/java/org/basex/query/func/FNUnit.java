@@ -11,7 +11,7 @@ import org.basex.util.*;
 import org.basex.util.list.*;
 
 /**
- * XQUnit functions.
+ * Unit functions.
  *
  * @author BaseX Team 2005-13, BSD License
  * @author Christian Gruen
@@ -83,10 +83,5 @@ public final class FNUnit extends StandardFunc {
     final Iter ir = ctx.iter(expr[0]);
     for(Item it; (it = ir.next()) != null;) tl.add(checkStr(it));
     return new Suite(ctx, info).test(tl);
-  }
-
-  @Override
-  public boolean uses(final Use u) {
-    return u == Use.NDT || super.uses(u);
   }
 }

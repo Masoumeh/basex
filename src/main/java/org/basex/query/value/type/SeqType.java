@@ -409,8 +409,9 @@ public final class SeqType {
    * @return promoted item
    * @throws QueryException query exception
    */
-  private Value funcConv(final QueryContext ctx, final InputInfo ii,
-      final Item it) throws QueryException {
+  private Value funcConv(final QueryContext ctx, final InputInfo ii, final Item it)
+      throws QueryException {
+
     if(type instanceof AtomType) {
       final Item atom = StandardFunc.atom(it, ii);
       if(atom != it && atom.type.instanceOf(type)) return it;
@@ -593,9 +594,23 @@ public final class SeqType {
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder();
+    if(occ != Occ.ONE && type instanceof FuncType) {
+      sb.append('(').append(typeString()).append(')');
+    } else {
+      sb.append(typeString());
+    }
+    if(!(type instanceof ListType)) sb.append(occ);
+    return sb.toString();
+  }
+
+  /**
+   * Returns a string representation of the type.
+   * @return string
+   */
+  public String typeString() {
+    final StringBuilder sb = new StringBuilder();
     sb.append(occ == Occ.ZERO ? EMPTY_SEQUENCE + "()" : type);
     if(kind != null) sb.deleteCharAt(sb.length() - 1).append(kind).append(')');
-    if(!(type instanceof ListType)) sb.append(occ);
     return sb.toString();
   }
 }

@@ -74,7 +74,7 @@ public final class FTWeight extends FTExpr {
     if(item == null) return null;
     final double d = checkDbl(weight, ctx);
     if(Math.abs(d) > 1000) FTWEIGHT.thrw(info, d);
-    if(d == 0) item.all.size = 0;
+    if(d == 0) item.all.size(0);
     item.score(item.score() * d);
     return item;
   }
@@ -86,8 +86,8 @@ public final class FTWeight extends FTExpr {
   }
 
   @Override
-  public boolean uses(final Use u) {
-    return weight.uses(u) || super.uses(u);
+  public boolean has(final Flag flag) {
+    return weight.has(flag) || super.has(flag);
   }
 
   @Override
@@ -113,7 +113,8 @@ public final class FTWeight extends FTExpr {
   }
 
   @Override
-  public FTExpr copy(final QueryContext ctx, final VarScope scp, final IntMap<Var> vs) {
+  public FTExpr copy(final QueryContext ctx, final VarScope scp,
+      final IntObjMap<Var> vs) {
     return new FTWeight(info, expr[0].copy(ctx, scp, vs), weight.copy(ctx, scp, vs));
   }
 

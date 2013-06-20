@@ -83,7 +83,9 @@ public abstract class Serializer {
   public final void serialize(final Item item) throws IOException {
     openResult();
     if(item instanceof ANode) {
-      if(item.type == NodeType.ATT || item.type == NodeType.NSP) SERATTR.thrwSerial(item);
+      final Type type = item.type;
+      if(type == NodeType.ATT) SERATTR.thrwSerial(item);
+      if(type == NodeType.NSP) SERNS.thrwSerial(item);
       serialize((ANode) item);
     } else if(item instanceof FItem) {
       SERFUNC.thrwSerial(item.description());
@@ -103,17 +105,18 @@ public abstract class Serializer {
     if(node instanceof DBNode) {
       serialize((DBNode) node);
     } else {
-      if(node.type == NodeType.COM) {
+      final Type type = node.type;
+      if(type == NodeType.COM) {
         comment(node.string());
-      } else if(node.type == NodeType.ATT) {
+      } else if(type == NodeType.ATT) {
         attribute(node.name(), node.string());
-      } else if(node.type == NodeType.TXT) {
+      } else if(type == NodeType.TXT) {
         text(node.string());
-      } else if(node.type == NodeType.PI) {
+      } else if(type == NodeType.PI) {
         pi(node.name(), node.string());
-      } else if(node.type == NodeType.NSP) {
+      } else if(type == NodeType.NSP) {
         namespace(node.name(), node.string());
-      } else if(node.type == NodeType.DOC) {
+      } else if(type == NodeType.DOC) {
         openDoc(node.baseURI());
         for(final ANode n : node.children()) serialize(n);
         closeDoc();
@@ -123,7 +126,7 @@ public abstract class Serializer {
         // serialize namespaces
         final Atts nsp = node.namespaces();
         for(int p = nsp.size() - 1; p >= 0; p--) {
-          namespace(nsp.name(p), nsp.string(p));
+          namespace(nsp.name(p), nsp.value(p));
         }
         // serialize attributes
         AxisIter ai = node.attributes();
@@ -362,7 +365,7 @@ public abstract class Serializer {
         // add namespace definitions
         if(nsp != null) {
           // add namespaces from database
-          nsp.reset();
+          nsp.clear();
           int pp = p;
 
           // check namespace of current element
@@ -377,8 +380,8 @@ public abstract class Serializer {
             final Atts atn = data.ns(pp);
             for(int n = 0; n < atn.size(); ++n) {
               key = atn.name(n);
-              val = atn.string(n);
-              if(nsp.add(key) > 0) namespace(key, val);
+              val = atn.value(n);
+              if(nsp.add(key)) namespace(key, val);
             }
             // check ancestors only on top level
             if(level != 0 || l != 0) break;
@@ -406,7 +409,7 @@ public abstract class Serializer {
    */
   private byte[] ns(final byte[] pref) {
     for(int i = ns.size() - 1; i >= 0; i--) {
-      if(eq(ns.name(i), pref)) return ns.string(i);
+      if(eq(ns.name(i), pref)) return ns.value(i);
     }
     return null;
   }

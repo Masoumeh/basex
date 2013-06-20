@@ -30,6 +30,7 @@ import org.basex.query.value.node.*;
 import org.basex.query.value.seq.*;
 import org.basex.query.value.type.*;
 import org.basex.util.*;
+import org.basex.util.hash.*;
 import org.basex.util.list.*;
 
 /**
@@ -40,6 +41,9 @@ import org.basex.util.list.*;
  * @author Dimitar Popov
  */
 public final class FNDb extends StandardFunc {
+  /** Element: parameters. */
+  private static final QNm Q_OPTIONS = QNm.get("options");
+
   /** Resource element name. */
   static final String SYSTEM = "system";
   /** Resource element name. */
@@ -654,7 +658,9 @@ public final class FNDb extends StandardFunc {
       }
     }
 
-    ctx.updates.add(new DBCreate(info, name, inputs, ctx), ctx);
+    final Item opt = expr.length > 3 ? expr[3].item(ctx, info) : null;
+    final TokenMap map = new FuncParams(Q_OPTIONS, info).parse(opt);
+    ctx.updates.add(new DBCreate(info, name, inputs, map, ctx), ctx);
     return null;
   }
 
@@ -710,8 +716,12 @@ public final class FNDb extends StandardFunc {
    */
   private Item optimize(final QueryContext ctx) throws QueryException {
     final Data data = checkWrite(checkData(ctx), ctx);
-    final boolean all = expr.length == 2 && checkBln(expr[1], ctx);
-    ctx.updates.add(new DBOptimize(data, ctx, all, info), ctx);
+    final boolean all = expr.length > 1 && checkBln(expr[1], ctx);
+
+    final Item opt = expr.length > 2 ? expr[2].item(ctx, info) : null;
+    final TokenMap map = new FuncParams(Q_OPTIONS, info).parse(opt);
+    // check database options
+    ctx.updates.add(new DBOptimize(data, ctx, all, map, info), ctx);
     return null;
   }
 
@@ -875,18 +885,6 @@ public final class FNDb extends StandardFunc {
     ni.dbname = token(name);
     ni.path = token(target);
     return ni;
-  }
-
-  @Override
-  public boolean uses(final Use u) {
-    final boolean up = oneOf(sig, _DB_ADD, _DB_DELETE, _DB_RENAME, _DB_REPLACE,
-        _DB_OPTIMIZE, _DB_STORE, _DB_OUTPUT, _DB_FLUSH, _DB_CREATE, _DB_DROP);
-    return
-      // skip evaluation at compile time
-      u == Use.NDT && (up || oneOf(sig, _DB_TEXT, _DB_ATTRIBUTE, _DB_TEXT_RANGE,
-          _DB_ATTRIBUTE_RANGE, _DB_FULLTEXT, _DB_EVENT)) ||
-      u == Use.UPD && up ||
-      super.uses(u);
   }
 
   @Override

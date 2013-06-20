@@ -42,7 +42,7 @@ public final class LitMap extends Arr {
   }
 
   @Override
-  public Expr copy(final QueryContext ctx, final VarScope scp, final IntMap<Var> vs) {
+  public Expr copy(final QueryContext ctx, final VarScope scp, final IntObjMap<Var> vs) {
     return new LitMap(info, copyAll(ctx, scp, vs, expr));
   }
 
@@ -58,8 +58,8 @@ public final class LitMap extends Arr {
   }
 
   @Override
-  public boolean uses(final Use u) {
-    return u == Use.X30 || super.uses(u);
+  public boolean has(final Flag flag) {
+    return flag == Flag.X30 || super.has(flag);
   }
 
   @Override

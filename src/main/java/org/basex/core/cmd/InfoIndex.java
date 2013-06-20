@@ -80,7 +80,6 @@ public final class InfoIndex extends AInfo {
           data.meta.ftxtindex);
       case SPATIAL:   return info(SPATIAL_INDEX, IndexType.SPATIAL, data,
           data.meta.spindex);
-          
       default:        return Token.token(LI + NOT_AVAILABLE);
     }
   }

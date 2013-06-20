@@ -106,8 +106,8 @@ public final class ValueAccess extends IndexAccess {
   }
 
   @Override
-  public boolean uses(final Use u) {
-    return expr.uses(u);
+  public boolean has(final Flag flag) {
+    return expr.has(flag);
   }
 
   @Override
@@ -130,7 +130,7 @@ public final class ValueAccess extends IndexAccess {
   }
 
   @Override
-  public Expr copy(final QueryContext ctx, final VarScope scp, final IntMap<Var> vs) {
+  public Expr copy(final QueryContext ctx, final VarScope scp, final IntObjMap<Var> vs) {
     return new ValueAccess(info, expr.copy(ctx, scp, vs), itype, data, iterable);
   }
 

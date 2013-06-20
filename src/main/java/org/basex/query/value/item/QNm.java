@@ -140,7 +140,8 @@ public final class QNm extends Item {
   }
 
   @Override
-  public boolean eq(final InputInfo ii, final Item it) throws QueryException {
+  public boolean eq(final Item it, final Collation coll, final InputInfo ii)
+      throws QueryException {
     if(it instanceof QNm) return eq((QNm) it);
     throw INVTYPECMP.thrw(ii, it.type, type);
   }
@@ -155,7 +156,8 @@ public final class QNm extends Item {
   }
 
   @Override
-  public int diff(final InputInfo ii, final Item it) throws QueryException {
+  public int diff(final Item it, final Collation coll, final InputInfo ii)
+      throws QueryException {
     throw Err.diff(ii, it, this);
   }
 
@@ -244,7 +246,7 @@ public final class QNm extends Item {
    * @return instance
    */
   public static QNm get(final String local) {
-    return CACHE.get(null, token(local), null);
+    return CACHE.index(null, token(local), null);
   };
 
   /**
@@ -253,7 +255,7 @@ public final class QNm extends Item {
    * @return instance
    */
   public static QNm get(final byte[] local) {
-    return CACHE.get(null, local, null);
+    return CACHE.index(null, local, null);
   };
 
   /**
@@ -263,7 +265,7 @@ public final class QNm extends Item {
    * @return instance
    */
   public static QNm get(final String local, final byte[] uri) {
-    return CACHE.get(null, token(local), uri);
+    return CACHE.index(null, token(local), uri);
   };
 
   /**
@@ -273,7 +275,7 @@ public final class QNm extends Item {
    * @return instance
    */
   public static QNm get(final byte[] local, final byte[] uri) {
-    return CACHE.get(null, local, uri);
+    return CACHE.index(null, local, uri);
   };
 
   /**
@@ -284,7 +286,7 @@ public final class QNm extends Item {
    * @return instance
    */
   public static QNm get(final String prefix, final String local, final byte[] uri) {
-    return CACHE.get(token(prefix), token(local), uri);
+    return CACHE.index(token(prefix), token(local), uri);
   };
 
   /**
@@ -295,7 +297,7 @@ public final class QNm extends Item {
    * @return instance
    */
   public static QNm get(final String prefix, final String local, final String uri) {
-    return CACHE.get(token(prefix), token(local), token(uri));
+    return CACHE.index(token(prefix), token(local), token(uri));
   };
 
   /**
@@ -306,7 +308,7 @@ public final class QNm extends Item {
    * @return instance
    */
   public static QNm get(final byte[] prefix, final byte[] local, final byte[] uri) {
-    return CACHE.get(prefix, local, uri);
+    return CACHE.index(prefix, local, uri);
   };
 
   /**
@@ -319,7 +321,7 @@ public final class QNm extends Item {
   public static byte[] internal(final byte[] prefix, final byte[] local,
       final byte[] uri) {
 
-    // save time by using direct array construction
+    // optimized for speed, as it is called quite frequently
     final int ul = uri == null ? 0 : uri.length;
     final int pl = prefix == null ? 0 : prefix.length;
     // return local name if no prefix and uri exist

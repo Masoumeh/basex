@@ -38,7 +38,7 @@ public final class Variables extends ExprInfo implements Iterable<StaticVar> {
    */
   public StaticVar declare(final QNm nm, final SeqType t, final Ann a, final Expr e,
       final boolean ext, final StaticContext sctx, final VarScope scp,
-      final StringBuilder xqdoc, final InputInfo ii) throws QueryException {
+      final String xqdoc, final InputInfo ii) throws QueryException {
 
     final StaticVar var = new StaticVar(sctx, scp, a, nm, t, e, ext, xqdoc, ii);
     final VarEntry ve = vars.get(nm);
@@ -133,7 +133,9 @@ public final class Variables extends ExprInfo implements Iterable<StaticVar> {
     final Iterator<Entry<QNm, VarEntry>> iter = vars.entrySet().iterator();
     return new Iterator<StaticVar>() {
       @Override
-      public void remove() { }
+      public boolean hasNext() {
+        return iter.hasNext();
+      }
 
       @Override
       public StaticVar next() {
@@ -141,8 +143,8 @@ public final class Variables extends ExprInfo implements Iterable<StaticVar> {
       }
 
       @Override
-      public boolean hasNext() {
-        return iter.hasNext();
+      public void remove() {
+        Util.notexpected();
       }
     };
   }

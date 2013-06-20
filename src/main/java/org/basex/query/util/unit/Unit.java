@@ -55,8 +55,7 @@ public final class Unit {
    * @throws QueryException query exception
    */
   public FElem test() throws QueryException {
-    final FElem tests = new FElem(TESTSUITE);
-    tests.add(NAME, ctx.sc.baseURI().string());
+    final FElem tests = new FElem(TESTSUITE).add(NAME, ctx.sc.baseURI().string());
     int t = 0, e = 0, f = 0, s = 0;
 
     final IO file = ctx.sc.baseIO();
@@ -67,7 +66,7 @@ public final class Unit {
       // consider only functions that are defined in the same file
       if(!file.eq(new IOFile(uf.info.file()))) continue;
 
-      // find XQUnit annotations
+      // find Unit annotations
       final Ann ann = uf.ann;
       final int as = ann.size();
       boolean xq = false;
@@ -76,7 +75,7 @@ public final class Unit {
       }
       if(!xq) continue;
 
-      // XQUnit function:
+      // Unit function:
       if(uf.updating) UNIT_UPDATE.thrw(info, uf.name.local());
       if(uf.args.length > 0) UNIT_ARGS.thrw(info, uf.name.local());
 
@@ -187,7 +186,7 @@ public final class Unit {
   }
 
   /**
-   * Checks if an XQUnit annotation has been specified.
+   * Checks if a unit annotation has been specified.
    * If positive, returns its offset in the annotation array.
    *
    * @param func user function

@@ -89,8 +89,7 @@ public final class JsonCGConverter extends JsonXMLConverter {
     final JsonCGHandler handler = new JsonCGHandler();
     JsonParser.parse(in, spec, unescape, handler, null);
     final ByteList[] types = new ByteList[TYPES.length];
-    for(int n = 0; n < handler.names.size(); n++) {
-      final TypedArray arr = handler.names.value(n + 1);
+    for(final TypedArray arr : handler.names.values()) {
       if(arr != null) {
         for(int i = 0; i < NAMES.length; i++) {
           if(arr.type == NAMES[i] && arr.type != T_STRING) {
@@ -150,14 +149,14 @@ public final class JsonCGConverter extends JsonXMLConverter {
           arr.add(e);
         } else {
           if(arr != null) {
-            names.add(name, null);
+            names.put(name, null);
             if(arr.type != T_STRING)
               for(int i = 0; i < arr.size; i++) arr.vals[i].add(T_TYPE, arr.type);
           }
           if(type != T_STRING) e.add(T_TYPE, type);
         }
       } else {
-        names.add(name, new TypedArray(type, e));
+        names.put(name, new TypedArray(type, e));
       }
       if(elem != null) elem.add(e);
       else elem = e;
@@ -304,11 +303,7 @@ public final class JsonCGConverter extends JsonXMLConverter {
      * @param nd element to add
      */
     protected void add(final FElem nd) {
-      if(size == vals.length) {
-        final FElem[] nVals = new FElem[size << 1];
-        System.arraycopy(vals, 0, nVals, 0, size);
-        vals = nVals;
-      }
+      if(size == vals.length) vals = Array.copy(vals, new FElem[Array.newSize(size)]);
       vals[size++] = nd;
     }
   }

@@ -24,6 +24,16 @@ import com.vividsolutions.jts.io.gml2.*;
  *
  */
 public class SpatialBuilder extends IndexBuilder {
+  /** URI. */
+  private static final byte[] GML_URI = Token.token("http://www.opengis.net/gml");
+  /** Token. */
+  private static final byte[] POINT = Token.token("Point");
+  /** Token. */
+  private static final byte[] LINESTRING = Token.token("LineString");
+  /** Token. */
+  private static final byte[] LINEARRING = Token.token("LinearRing");
+  /** Token. */
+  private static final byte[] POLYGON = Token.token("Polygon");
 
   /** STRTree. */
   STRtree str;
@@ -38,11 +48,6 @@ public class SpatialBuilder extends IndexBuilder {
 
   @Override
   public Index build() throws IOException {
-    byte[] GML_URI = Token.token("http://www.opengis.net/gml");
-    byte[] POINT = Token.token("Point");
-    byte[] LINESTRING = Token.token("LineString");
-    byte[] LINEARRING = Token.token("LinearRing");
-    byte[] POLYGON = Token.token("Polygon");
 //    byte[] MULTIPOINT = Token.token("MultiPoint");
 //    byte[] MULTILINESTRING = Token.token("MultiLineString");
 //    byte[] MULTIPOLYGON = Token.token("MultiPolygon");
@@ -53,7 +58,7 @@ public class SpatialBuilder extends IndexBuilder {
     GeometryFactory geometryFactory = new GeometryFactory();
 
     str = new STRtree();
-    for(int pre = 0; pre < data.meta.size; pre++) {
+    for(pre = 0; pre < data.meta.size; pre++) {
       final int kind = data.kind(pre);
       if(kind != Data.ELEM) continue;
 
@@ -85,6 +90,6 @@ public class SpatialBuilder extends IndexBuilder {
             new FileOutputStream(data.meta.dbfile("STRTreeIndex").file())));
     oos.writeObject(str);
     oos.close();
-    return new SpatialIndex(data);
+    return new SpatialIndex();
   }
 }

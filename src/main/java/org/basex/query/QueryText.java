@@ -358,10 +358,6 @@ public interface QueryText {
   /** Parser token. */
   String DF_ZG = "zero-digit";
 
-  /** Option: prohibit-feature. */
-  String PROHIBIT_FEATURE = "prohibit-feature";
-  /** Option: require-feature. */
-  String REQUIRE_FEATURE = "require-feature";
   /** Option: read-lock. */
   String READ_LOCK = "read-lock";
   /** Option: write-lock. */
@@ -527,7 +523,7 @@ public interface QueryText {
   byte[] INSPECT = token("inspect");
   /** XQuery token. */
   byte[] XQRY = token(XQUERY);
-  /** XQUnit token. */
+  /** Unit token. */
   byte[] UNIT = token("unit");
   /** Rest token. */
   byte[] REST = token("rest");
@@ -539,18 +535,6 @@ public interface QueryText {
   /** Language attribute. */
   byte[] LANG = token("xml:lang");
 
-  /** Feature: schema-aware. */
-  String F_SCHEMA_AWARE = "schema-aware";
-  /** Feature: static-typing. */
-  String F_STATIC_TYPING = "static-typing";
-  /** Feature: module. */
-  String F_MODULE = "module";
-  /** Feature: higher-order-function. */
-  String F_HIGHER_ORDER_FUNCTION = "higher-order-function";
-  /** Feature: all-extensions. */
-  String F_ALL_EXTENSIONS = "all-extensions";
-  /** Feature: all-optional-features. */
-  String F_ALL_OPTIONAL_FEATURES = "all-optional-features";
 
   // URIS =====================================================================
 
@@ -648,7 +632,7 @@ public interface QueryText {
   byte[] SQLURI = token(BXMODULES + "sql");
   /** Streaming module URI. */
   byte[] STREAMURI = token(BXMODULES + "stream");
-  /** XQUnit module URI. */
+  /** Unit module URI. */
   byte[] UNITURI = token(BXMODULES + "unit");
   /** Validate module URI. */
   byte[] VALIDATEURI = token(BXMODULES + "validate");
@@ -665,6 +649,8 @@ public interface QueryText {
   /** Supported documentation tags. */
   byte[][] DOC_TAGS = tokens("description", "author", "version", "param",
       "return", "error", "deprecated", "see", "since");
+  /** Documentation: description tag. */
+  byte[] DOC_DESCRIPTION = token("description");
   /** Documentation: param tag. */
   byte[] DOC_PARAM = token("param");
   /** Documentation: return tag. */

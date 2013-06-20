@@ -5,7 +5,7 @@ import static org.basex.query.util.Err.*;
 
 import org.basex.query.*;
 import org.basex.query.expr.*;
-import org.basex.query.expr.Expr.Use;
+import org.basex.query.expr.Expr.Flag;
 import org.basex.query.func.*;
 import org.basex.query.util.*;
 import org.basex.query.value.*;
@@ -47,7 +47,7 @@ public final class StaticVar extends StaticDecl {
    */
   StaticVar(final StaticContext sctx, final VarScope scp, final Ann a, final QNm n,
       final SeqType t, final Expr e, final boolean ext,
-      final StringBuilder xqdoc, final InputInfo ii) {
+      final String xqdoc, final InputInfo ii) {
     super(sctx, a, n, t, scp, xqdoc, ii);
     expr = e;
     external = ext;
@@ -85,7 +85,7 @@ public final class StaticVar extends StaticDecl {
       } catch(final QueryException qe) {
         compiled = true;
         if(lazy) {
-          expr = FNInfo.error(qe, info);
+          expr = FNInfo.error(qe);
           return;
         }
         throw qe.notCatchable();
@@ -147,7 +147,7 @@ public final class StaticVar extends StaticDecl {
    * @throws QueryException query exception
    */
   public void checkUp() throws QueryException {
-    if(expr != null && expr.uses(Use.UPD)) UPNOT.thrw(info, description());
+    if(expr != null && expr.has(Flag.UPD)) UPNOT.thrw(info, description());
   }
 
   /**

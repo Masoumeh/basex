@@ -51,7 +51,7 @@ public final class FTIndexAccess extends Simple {
       public ANode next() throws QueryException {
         final FTNode it = ir.next();
         if(it != null) {
-          // add entry to visualization
+          // cache entry for visualizations or ft:mark/ft:extract
           if(ctx.ftpos != null) ctx.ftpos.add(it.data, it.pre, it.all);
           // assign scoring, if not done yet
           it.score();
@@ -64,8 +64,8 @@ public final class FTIndexAccess extends Simple {
   }
 
   @Override
-  public boolean uses(final Use u) {
-    return ftexpr.uses(u);
+  public boolean has(final Flag flag) {
+    return ftexpr.has(flag);
   }
 
   @Override
@@ -85,7 +85,7 @@ public final class FTIndexAccess extends Simple {
   }
 
   @Override
-  public Expr copy(final QueryContext ctx, final VarScope scp, final IntMap<Var> vs) {
+  public Expr copy(final QueryContext ctx, final VarScope scp, final IntObjMap<Var> vs) {
     return new FTIndexAccess(info, ftexpr.copy(ctx, scp, vs), db, iterable);
   }
 

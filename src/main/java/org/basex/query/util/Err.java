@@ -29,13 +29,17 @@ public enum Err {
   /** BASX0002. */
   BASX_OPTIONS(BASX, 2, "Unknown database option '%'."),
   /** BASX0002. */
-  BASX_VALUE(BASX, 2, "Invalid value for database option: %."),
+  BASX_VALUE(BASX, 2, "Database option '%' has invalid value '%'."),
   /** BASX0003. */
   BASX_RESTXQ(BASX, 3, "%"),
   /** BASX0004. */
   BASX_DBTRANSFORM(BASX, 4, "No database updates allowed within transform expression."),
   /** BASX0005. */
   BASX_STACKOVERFLOW(BASX, 5, "Stack Overflow: Try tail recursion?"),
+  /** BASX0006. */
+  BASX_ANNOT(BASX, 6, "Annotation %% is invalid or not supported."),
+  /** BASX0006. */
+  BASX_ANNOTARGS(BASX, 6, "Annotation %% has invalid arguments."),
 
   // Client module
 
@@ -57,7 +61,7 @@ public enum Err {
   /** BXCO0001. */
   BXCO_STRING(BXCO, 1, "String conversion: %."),
   /** BXCO0001. */
-  BXCO_BASE64(BXCO, 1, "String cannot be converted to the specified encoding."),
+  BXCO_BASE64(BXCO, 1, "String cannot be converted to the supplied encoding."),
   /** BXCO0002. */
   BXCO_ENCODING(BXCO, 2, "Encoding '%' is not supported."),
 
@@ -169,13 +173,13 @@ public enum Err {
   /** BXSQ0003. */
   BXSQ_PARAMS(BXSQ, 3, "Number of parameters differs from number of placeholders"),
   /** BXSQ0004. */
-  BXSQ_TYPE(BXSQ, 4, "No parameter type specified."),
+  BXSQ_TYPE(BXSQ, 4, "No parameter type supplied."),
   /** BXSQ0005. */
   BXSQ_ATTR(BXSQ, 5, "Not expected attribute: %"),
   /** BXSQ0006. */
   BXSQ_FORMAT(BXSQ, 6, "Illegal % format"),
   /** BXSQ0007. */
-  BXSQ_DRIVER(BXSQ, 7, "Could not initialize specified driver: '%'"),
+  BXSQ_DRIVER(BXSQ, 7, "Could not initialize supplied driver: '%'"),
 
   // Validation module
 
@@ -189,14 +193,14 @@ public enum Err {
   /** BXXQ0001. */
   BXXQ_UPDATING(BXXQ, 1, "No updating expression allowed."),
 
-  // XQUnit module
+  // Unit module
 
   /** UNIT0001. */
   UNIT_ASSERT(UNIT, 1, "Assertion failed."),
   /** UNIT0001. */
   UNIT_MESSAGE(UNIT, 1, "%"),
   /** UNIT0002. */
-  UNIT_ARGS(UNIT, 2, "Test function '%(...)' must have no arguments."),
+  UNIT_ARGS(UNIT, 2, "Test function '%' must have no arguments."),
   /** UNIT0003. */
   UNIT_UPDATE(UNIT, 3, "Function '%' is updating."),
   /** UNIT0004. */
@@ -207,7 +211,7 @@ public enum Err {
   // EXPath modules
 
   /** ARCH0001. */
-  ARCH_DIFF(ARCH, 1, "Number of specified entries and contents differs: % vs. %."),
+  ARCH_DIFF(ARCH, 1, "Number of supplied entries and contents differs: % vs. %."),
   /** ARCH0002. */
   ARCH_UNKNOWN(ARCH, 2, "Packing format not supported."),
   /** ARCH0002. */
@@ -311,7 +315,7 @@ public enum Err {
   /** HC0004. */
   HC_REQ(HC, 4, "Invalid request element: %."),
   /** HC0005. */
-  HC_URL(HC, 5, "No URL specified."),
+  HC_URL(HC, 5, "No URL supplied."),
   /** HC0006. */
   HC_PARAMS(HC, 6, "Specify request element or HTTP URI."),
 
@@ -343,9 +347,11 @@ public enum Err {
   /** FOCH0001. */
   INVCODE(FOCH, 1, "Invalid XML character '&#x%;'."),
   /** FOCH0002. */
-  IMPLCOL(FOCH, 2, "Unknown collation %."),
+  WHICHCOLL(FOCH, 2, "Unknown collation '%'."),
   /** FOCH0003. */
   NORMUNI(FOCH, 3, "Unsupported normalization form (%)."),
+  /** FOCH0004. */
+  CHARCOLL(FOCH, 4, "Collation does not support function."),
 
   /** FODC0001. */
   IDDOC(FODC, 1, "Root must be a document node."),
@@ -555,7 +561,9 @@ public enum Err {
   FTDUP(FTST, 19, "Match option '%' was declared twice."),
 
   /** SENR0001. */
-  SERATTR(SENR, 1, "Attributes and namespaces cannot be serialized:%."),
+  SERATTR(SENR, 1, "Attributes cannot be serialized:%."),
+  /** SENR0001. */
+  SERNS(SENR, 1, "Namespaces cannot be serialized:%."),
   /** SENR0001. */
   SERFUNC(SENR, 1, "Functions cannot be serialized: %."),
   /** SEPM0004. */
@@ -665,9 +673,9 @@ public enum Err {
   /** XPST0003. */
   NOFUNBODY(XPST, 3, "Expecting function body."),
   /** XPST0003. */
-  FUNCMISS(XPST, 3, "Expecting closing bracket for '%(...'."),
+  FUNCMISS(XPST, 3, "Expecting closing bracket for function '%'."),
   /** XPST0003. */
-  MAPTAAT(XPST, 3, "Expecting atomic key type for map(...), found '%'."),
+  MAPTAAT(XPST, 3, "Expecting atomic key type for map, found '%'."),
   /** XPST0003. */
   TYPEINVALID(XPST, 3, "Expecting type declaration."),
   /** XPST0003. */
@@ -752,28 +760,32 @@ public enum Err {
   /** XPST0008. */
   VARUNDEF(XPST, 8, "Undefined variable %."),
   /** XPST0008. */
-  VARPRIVATE(XPST, 8, "Private variable % is not visible from this module."),
+  VARPRIVATE(XPST, 8, "Variable % is not visible from this module."),
   /** XPST0008. */
   TYPEUNDEF(XPST, 8, "Undefined type '%'."),
   /** XPST0008. */
   SCHEMAINV(XPST, 8, "Undefined schema name '%'."),
 
   /** XPST0017. */
-  FUNCPRIV(XPST, 17, "Function is private: %(...)."),
-  /** XPST0017. */
-  FUNCARGS(XPST, 17, "%: wrong number of arguments."),
+  FUNCPRIV(XPST, 17, "Function '%' is not visible from this module."),
   /** XPST0017. */
   FUNCSIMILAR(XPST, 17, "Unknown function '%'; similar: '%'."),
   /** XPST0017. */
-  FUNCTYPE(XPST, 17, "%(...): wrong number of arguments."),
+  FUNCARGSG(XPST, 17, "%: % argument supplied."),
   /** XPST0017. */
-  FUNCUNKNOWN(XPST, 17, "Unknown function: %(...)."),
+  FUNCARGPL(XPST, 17, "%: % arguments supplied."),
   /** XPST0017. */
-  FUNCNOIMPL(XPST, 17, "Function not implemented: %(...)."),
+  FUNCTYPESG(XPST, 17, "Function '%': % argument supplied; expected: %."),
   /** XPST0017. */
-  FUNCJAVA(XPST, 17, "Java function '%(...)' not found."),
+  FUNCTYPEPL(XPST, 17, "Function '%': % arguments supplied; expected: %."),
   /** XPST0017. */
-  JAVAAMBIG(XPST, 17, "Signature is ambiguous: '%(...)'."),
+  FUNCUNKNOWN(XPST, 17, "Unknown function '%'."),
+  /** XPST0017. */
+  FUNCNOIMPL(XPST, 17, "Function v not implemented."),
+  /** XPST0017. */
+  FUNCJAVA(XPST, 17, "Java function '%' not found."),
+  /** XPST0017. */
+  JAVAAMBIG(XPST, 17, "Signature '%' is ambiguous."),
   /** XPST0017. */
   JAVAINIT(XPST, 17, "Class cannot be initialized: %."),
   /** XPST0003. */
@@ -881,19 +893,19 @@ public enum Err {
   /** XQST0033. */
   DUPLNSDECL(XQST, 33, "Duplicate declaration of prefix '%'."),
   /** XQST0034. */
-  FUNCDEFINED(XQST, 34, "Duplicate declaration of function %(...)."),
+  FUNCDEFINED(XQST, 34, "Duplicate declaration of function '%'."),
   /** XQST0038. */
   DUPLCOLL(XQST, 38, "Duplicate 'collation' declaration."),
-  /** XQST0076. */
-  COLLWHICH(XQST, 38, "Unknown collation '%'."),
+  /** XQST0038. */
+  WHICHDEFCOLL(XQST, 38, "Unknown collation '%'."),
   /** XQST0039. */
   FUNCDUPL(XQST, 39, "Duplicate function argument %."),
   /** XQST0040. */
   ATTDUPL(XQST, 40, "Duplicate attribute '%'."),
   /** XQST0045. */
-  NAMERES(XQST, 45, "Function %(...) uses reserved namespace."),
+  NAMERES(XQST, 45, "Function '%' is in reserved namespace."),
   /** XQST0045. */
-  ANNRES(XQST, 45, "Annotation % uses reserved namespace."),
+  ANNRES(XQST, 45, "Annotation %% is in reserved namespace."),
   /** XQST0046. */
   INVURI(XQST, 46, "URI '%' is invalid."),
   /** XQST0047. */
@@ -921,7 +933,7 @@ public enum Err {
   /** XQST0059. */
   WRONGMODULE(XQST, 59, "Wrong URI '%' in imported module '%'."),
   /** XQST0060. */
-  FUNNONS(XQST, 60, "Namespace needed for function %(...)."),
+  FUNNONS(XQST, 60, "Namespace needed for function '%'."),
   /** XQST0065. */
   DUPLORD(XQST, 65, "Duplicate 'ordering' declaration."),
   /** XQST0066. */
@@ -943,7 +955,7 @@ public enum Err {
   /** XQST0075. */
   IMPLVAL(XQST, 75, "Validation not supported."),
   /** XQST0076. */
-  WHICHCOLL(XQST, 76, "Unknown collation '%'."),
+  FLWORCOLL(XQST, 76, "Unknown collation '%'."),
   /** XQST0079. */
   NOPRAGMA(XQST, 79, "Expecting pragma expression."),
   /** XQST0085. */
@@ -1004,14 +1016,6 @@ public enum Err {
   DECLFEAT(XQST, 123, "Unknown feature: '%'."),
   /** XPST0125. */
   INVISIBLE(XQST, 125, "No visibility annotation allowed in inline function."),
-  /** XPST0126. */
-  FEATREQUALL(XQST, 126, "The '%' feature cannot be specified as required feature."),
-  /** XPST0127. */
-  FEATREQPRO(XQST, 127, "The '%' feature cannot be both required and prohibited."),
-  /** XPST0128. */
-  FEATPROH(XQST, 128, "The '%' feature cannot be deactivated."),
-  /** XPST0132. */
-  FEATMODULE(XQST, 132, "The '%' feature is not allowed in a library module."),
 
   /** XQTY0024. */
   NOATTALL(XQTY, 24, "Attribute must follow the root element."),

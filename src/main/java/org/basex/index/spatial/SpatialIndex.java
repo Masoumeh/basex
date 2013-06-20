@@ -1,6 +1,5 @@
 package org.basex.index.spatial;
 
-import org.basex.data.*;
 import org.basex.index.*;
 import org.basex.index.query.*;
 
@@ -11,14 +10,6 @@ import org.basex.index.query.*;
  * @author Masoumeh Seydi
  */
 public class SpatialIndex implements Index {
-
-  /**
-   * Default constructor.
-   * @param d Data
-   */
-  public SpatialIndex(final Data d) {
-  }
-
   @Override
   public void init() {
     // TODO Auto-generated method stub
